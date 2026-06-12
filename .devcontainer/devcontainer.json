@@ -1,0 +1,22 @@
+{
+  "name": "rancher-quickstart-terraform",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/terraform:1": {
+      "version": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terraform.languageServer.enable": true,
+        "terraform.experimentalFeatures.validateOnSave": true
+      },
+      "extensions": [
+        "hashicorp.terraform"
+      ]
+    }
+  },
+  "postCreateCommand": "terraform -version"
+}

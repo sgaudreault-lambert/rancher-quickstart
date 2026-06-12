@@ -196,3 +196,14 @@ resource "aws_instance" "quickstart_node" {
     Creator = "rancher-quickstart"
   }
 }
+
+# Allocate a Static Public IP
+resource "aws_eip" "rancher_server_eip" {
+  instance = aws_instance.rancher_server.id
+  domain   = "vpc"
+
+  tags = {
+    Name    = "${var.prefix}-rancher-server-eip"
+    Creator = "rancher-quickstart"
+  }
+}

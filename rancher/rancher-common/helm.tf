@@ -2,6 +2,10 @@
 
 # Install cert-manager helm chart
 resource "helm_release" "cert_manager" {
+  depends_on = [
+    ssh_resource.retrieve_config
+  ]
+
   name             = "cert-manager"
   chart            = "https://charts.jetstack.io/charts/cert-manager-v${var.cert_manager_version}.tgz"
   namespace        = "cert-manager"
@@ -17,6 +21,7 @@ resource "helm_release" "cert_manager" {
 # Install Rancher helm chart
 resource "helm_release" "rancher_server" {
   depends_on = [
+    ssh_resource.retrieve_config,
     helm_release.cert_manager,
   ]
 
