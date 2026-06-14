@@ -73,10 +73,35 @@ resource "aws_security_group" "rancher_sg_allowall" {
   description = "Rancher quickstart - allow all traffic"
   vpc_id      = aws_vpc.rancher_vpc.id
 
+  # ADD THIS: Open HTTPS Port 443 for Rancher Dashboard Traffic
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # ADD THIS: Open HTTP Port 80 for Let's Encrypt / Cert redirection
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  # Force SSH port 22 open globally so Terraform script can connect
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Ensure K3s API port 6443 is open globally as well
+  ingress {
+    from_port   = 6443
+    to_port     = 6443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -98,7 +123,7 @@ resource "aws_instance" "rancher_server" {
     aws_route_table_association.rancher_route_table_association
   ]
   ami           = data.aws_ami.sles.id
-  instance_type = var.instance_type
+  instance_type = var.rancher_instance_type
 
   key_name                    = aws_key_pair.quickstart_key_pair.key_name
   vpc_security_group_ids      = [aws_security_group.rancher_sg_allowall.id]
@@ -134,7 +159,7 @@ resource "aws_instance" "rancher_server" {
 module "rancher_common" {
   source = "../rancher-common"
 
-  node_public_ip             = aws_instance.rancher_server.public_ip
+  node_public_ip             = aws_eip.rancher_server_eip.public_ip
   node_internal_ip           = aws_instance.rancher_server.private_ip
   node_username              = local.node_username
   ssh_private_key_pem        = tls_private_key.global_key.private_key_pem
@@ -158,7 +183,7 @@ resource "aws_instance" "quickstart_node" {
     aws_route_table_association.rancher_route_table_association
   ]
   ami           = data.aws_ami.sles.id
-  instance_type = var.instance_type
+  instance_type = var.node_instance_type
 
   key_name                    = aws_key_pair.quickstart_key_pair.key_name
   vpc_security_group_ids      = [aws_security_group.rancher_sg_allowall.id]

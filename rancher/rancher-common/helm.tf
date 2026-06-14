@@ -33,7 +33,8 @@ resource "helm_release" "rancher_server" {
 
   set {
     name  = "hostname"
-    value = var.rancher_server_dns
+    # Change from aws_eip.rancher_server_eip.public_ip to var.node_public_ip
+    value = "rancher.${var.node_public_ip}.sslip.io"
   }
 
   set {

@@ -38,10 +38,16 @@ variable "prefix" {
   default     = "quickstart"
 }
 
-variable "instance_type" {
+variable "rancher_instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
   default     = "t3a.medium"
+}
+
+variable "node_instance_type" {
+  type        = string
+  description = "Instance type used for node EC2 instances"
+  default     = "t3a.small"
 }
 
 variable "windows_instance_type" {

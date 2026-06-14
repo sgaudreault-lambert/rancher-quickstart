@@ -17,9 +17,14 @@
         "terraform.experimentalFeatures.validateOnSave": true
       },
       "extensions": [
-        "hashicorp.terraform"
+        "hashicorp.terraform",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
       ]
     }
   },
-  "postCreateCommand": "terraform -version"
+  "mounts": [
+    "source=${localEnv:HOME}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached"
+  ],
+  "updateContentCommand": "sudo curl -fsSL -o /usr/local/bin/kubectl \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\" && sudo chmod +x /usr/local/bin/kubectl",
+  "postCreateCommand": "terraform -version && kubectl version --client"
 }
