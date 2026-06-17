@@ -34,6 +34,8 @@ provider "rancher2" {
   insecure = true
   # ca_certs  = data.kubernetes_secret.rancher_cert.data["ca.crt"]
   bootstrap = true
+
+  timeout   = "300s"
 }
 
 # Rancher2 administration provider
