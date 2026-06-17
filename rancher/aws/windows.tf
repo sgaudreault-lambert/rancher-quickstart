@@ -12,12 +12,12 @@ resource "aws_instance" "quickstart_node_win" {
   associate_public_ip_address = true
   get_password_data           = true
 
-  user_data = templatefile(
-    "${path.module}/files/userdata_quickstart_windows.template",
-    {
-      register_command = module.rancher_common.custom_cluster_windows_command
-    }
-  )
+  # user_data = templatefile(
+  #   "${path.module}/files/userdata_quickstart_windows.template",
+  #   {
+  #     register_command = module.rancher_common.custom_cluster_windows_command
+  #   }
+  # )
 
   root_block_device {
     volume_size = 50

@@ -99,6 +99,12 @@ variable "add_windows_node" {
   default     = false
 }
 
+variable "add_quickstart_node" {
+  type        = bool
+  description = "Add a node to the workload cluster that is provisioned with this module, useful for quickstart testing without needing to register your own nodes"
+  default     = false
+}
+
 # Local variables used to reduce repetition
 locals {
   node_username = "ec2-user"

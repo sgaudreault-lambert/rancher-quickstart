@@ -25,6 +25,9 @@ windows_instance_type = "t3a.large"
 # Instance type used for rancher EC2 instances
 rancher_instance_type = "t3a.medium"
 
+# Add a quickstart node to the workload cluster
+add_quickstart_node = false
+
 # Instance type used for node EC2 instances
 node_instance_type = "t3a.small"
 
