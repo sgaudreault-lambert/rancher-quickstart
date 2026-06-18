@@ -99,7 +99,7 @@ variable "add_windows_node" {
   default     = false
 }
 
-variable "add_quickstart_node" {
+variable "add_workload_node" {
   type        = bool
   description = "Add a node to the workload cluster that is provisioned with this module, useful for quickstart testing without needing to register your own nodes"
   default     = false

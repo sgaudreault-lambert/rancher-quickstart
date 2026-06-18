@@ -182,7 +182,7 @@ resource "aws_instance" "quickstart_node" {
   depends_on = [
     aws_route_table_association.rancher_route_table_association
   ]
-  count         = var.add_quickstart_node ? 1 : 0
+  count         = var.add_workload_node ? 1 : 0
   ami           = data.aws_ami.sles.id
   instance_type = var.node_instance_type
 
@@ -195,12 +195,12 @@ resource "aws_instance" "quickstart_node" {
     volume_size = 40
   }
 
-  # user_data = templatefile(
-  #   "${path.module}/files/userdata_quickstart_node.template",
-  #   {
-  #     register_command = module.rancher_common.custom_cluster_command
-  #   }
-  # )
+  user_data = templatefile(
+    "${path.module}/files/userdata_quickstart_node.template",
+    {
+      register_command = module.rancher_common.custom_cluster_command
+    }
+  )
 
   provisioner "remote-exec" {
     inline = [
