@@ -25,3 +25,4 @@ vagrant/local_config.yaml
 # Terraform plan files
 *.tfplan
 rancher/aws/.terraform.lock.hcl
+.aws_config

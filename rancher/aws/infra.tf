@@ -169,7 +169,7 @@ module "rancher_common" {
   rancher_version         = var.rancher_version
   rancher_helm_repository = var.rancher_helm_repository
 
-  rancher_server_dns = join(".", ["rancher", aws_instance.rancher_server.public_ip, "sslip.io"])
+  rancher_server_dns = join(".", ["rancher", aws_eip.rancher_server_eip.public_ip, "sslip.io"])
 
   admin_password = var.rancher_server_admin_password
 
